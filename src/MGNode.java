@@ -33,4 +33,13 @@ public class MGNode implements iNode {
     public int isEdge(int node) {
         return edges.get(node).size();
     }
+
+    @Override
+    public int outDegree() {
+        int deg = 0;
+        for (int i = 0; i < edges.size(); i++) {
+             deg = deg + edges.get(i).size();
+        }
+        return deg;
+    }
 }

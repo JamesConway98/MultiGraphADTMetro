@@ -9,4 +9,6 @@ public interface iNode {
 
     public int isEdge(int node);
 
+    public int outDegree();
+
 }
