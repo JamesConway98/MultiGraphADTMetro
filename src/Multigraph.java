@@ -5,28 +5,28 @@ import java.util.Stack;
 
 public class Multigraph implements iGraph {
 
-    private ArrayList<iNode> nodes;
+    private ArrayList<iNode> graph;
 
     public Multigraph() {
-        nodes = new ArrayList<>();
+        graph = new ArrayList<>();
     }
 
     @Override
     public void addNode() {
-        nodes.add(new MGNode(numNodes()+1));
+        graph.add(new MGNode(numNodes()+1));
         for (int i = 0; i < numNodes()-1; i++) {
-            nodes.get(i).setNumNodes(numNodes());
+            graph.get(i).setNumNodes(numNodes());
         }
     }
 
     @Override
     public int numNodes() {
-        return nodes.size();
+        return graph.size();
     }
 
     @Override
     public void addEdge(int root, int destination, String label) {
-        nodes.get(root).addEdge(destination, label);
+        graph.get(root).addEdge(destination, label);
     }
 
     @Override

@@ -4,41 +4,41 @@ public class MGNode implements iNode {
 
     //private String ID, name;
 
-    private ArrayList<ArrayList<iEdge>> edges;
+    private ArrayList<ArrayList<iEdge>> node;
 
 
     public MGNode(int numNodes){ //}, String ID, String name) {
-        edges = new ArrayList<>();
+        node = new ArrayList<>();
         //this.ID = ID;
         //this.name = name;
     }
 
     @Override
     public void setNumNodes(int numNodes) {
-        for (int i = 0; i < (numNodes - edges.size()); i++) {
-            if (edges.get(i).equals(null))
-                edges.add(new ArrayList<>());
+        for (int i = 0; i < (numNodes - node.size()); i++) {
+            if (node.get(i).equals(null))
+                node.add(new ArrayList<>());
         }
     }
 
     @Override
-    public int addEdge(int node, String label) {
+    public int addEdge(int nodeIndex, String label) {
         //if (edges.get(node).size() == 0){
-            edges.get(node).add(new MGEdge(label));
-            return edges.get(node).size();
+            node.get(nodeIndex).add(new MGEdge(label));
+            return node.get(nodeIndex).size();
         //}
     }
 
     @Override
-    public int isEdge(int node) {
-        return edges.get(node).size();
+    public int isEdge(int nodeIndex) {
+        return node.get(nodeIndex).size();
     }
 
     @Override
     public int outDegree() {
         int deg = 0;
-        for (int i = 0; i < edges.size(); i++) {
-             deg = deg + edges.get(i).size();
+        for (int i = 0; i < node.size(); i++) {
+             deg = deg + node.get(i).size();
         }
         return deg;
     }
