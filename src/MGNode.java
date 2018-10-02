@@ -2,15 +2,16 @@ import java.util.ArrayList;
 
 public class MGNode implements iNode {
 
-    //private String ID, name;
+    private String name;
+    private int ID;
 
     private ArrayList<ArrayList<iEdge>> node;
 
 
-    public MGNode(int numNodes){ //}, String ID, String name) {
-        node = new ArrayList<>();
-        //this.ID = ID;
-        //this.name = name;
+    public MGNode(int numNodes, int ID, String name) {
+        node = new ArrayList<>();						//give the node a list of edges
+        this.ID = ID;									//give the node an ID
+        this.name = name;								//give the node a name
     }
 
     @Override
@@ -22,11 +23,11 @@ public class MGNode implements iNode {
     }
 
     @Override
-    public int addEdge(int nodeIndex, String label) {
-        //if (edges.get(node).size() == 0){
+    public int addEdge(int nodeIndex, String label) {		//add an edge for a given node index
+        if (node.get(nodeIndex).size() == 0){				//add the edge if the nodes aren't already connected
             node.get(nodeIndex).add(new MGEdge(label));
             return node.get(nodeIndex).size();
-        //}
+        }
     }
 
     @Override
