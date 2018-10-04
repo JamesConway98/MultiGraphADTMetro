@@ -1,6 +1,4 @@
-public interface iEdge {
-
-    public void setLabel(String label);
-
+public interface IEdge
+{
     public String getLabel();
 }

@@ -1,54 +1,21 @@
-import java.util.ArrayList;
-
-public class MGNode implements iNode {
-
-    private String name;
-    private int ID;
-
-    private ArrayList<ArrayList<iEdge>> node;
-
-
-    public MGNode(int numNodes, int ID, String name) {
-        node = new ArrayList<>();                        //give the node a list of edges
-        this.ID = ID;                                    //give the node an ID
-        this.name = name;                                //give the node a name
+public class MGNode implements INode
+{
+    private String label;
+    private int id;
+    
+    public MGNode(int id, String label)
+    {
+	this.id = id;
+	this.label = label;
     }
-
-    @Override
-    public void setNumNodes(int numNodes) {
-        for (int i = 0; i < (numNodes - node.size()); i++) {
-            if (node.get(i).equals(null))
-                node.add(new ArrayList<>());
-        }
+    
+    public int getId()
+    {
+	return id;
     }
-
-    @Override
-    public int addEdge(int nodeIndex, String label) {        //add an edge for a given node index
-        node.get(nodeIndex).add(new MGEdge(label));
-        return node.get(nodeIndex).size();
-    }
-
-    @Override
-    public int isEdge(int nodeIndex) {
-        return node.get(nodeIndex).size();
-    }
-
-    @Override
-    public int outDegree() {
-        int deg = 0;
-        for (int i = 0; i < node.size(); i++) {
-            deg = deg + node.get(i).size();
-        }
-        return deg;
-    }
-
-    @Override
-    public int getID() {
-        return ID;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+    
+    public String getLabel()
+    {
+	return label;
     }
 }
