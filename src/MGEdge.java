@@ -15,6 +15,4 @@ public class MGEdge implements iEdge {
     public String getLabel() {
         return label;
     }
-
-
 }

@@ -12,8 +12,8 @@ public class Multigraph implements iGraph {
     }
 
     @Override
-    public void addNode() {
-        graph.add(new MGNode(numNodes()+1));
+    public void addNode(int ID, String name) {
+        graph.add(new MGNode(numNodes()+1, ID, name));
         for (int i = 0; i < numNodes()-1; i++) {
             graph.get(i).setNumNodes(numNodes());
         }

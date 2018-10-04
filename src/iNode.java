@@ -11,4 +11,7 @@ public interface iNode {
 
     public int outDegree();
 
+    public int getID();
+
+    public String getName();
 }
