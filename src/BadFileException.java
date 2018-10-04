@@ -1,4 +1,7 @@
+public class BadFileException extends Exception{
 
-public class BadFileException {
-
+	
+	public BadFileException(String arg){
+		super(arg);
+	}
 }
