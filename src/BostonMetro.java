@@ -87,7 +87,7 @@ public class BostonMetro
 				|| nodes.get(i).contains("Mattapan")) && Integer.parseInt(nodes.get(i).get(0)) == i + 1){
 				red.put(i + 1, nodes.get(i).get(1));
 			}
-		}System.out.print(red.size());
+		}
 	}
     
 }
