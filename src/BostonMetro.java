@@ -27,7 +27,7 @@ public class BostonMetro
         something like that :)
 	*/
     public BostonMetro() throws BadFileException {
-    	fileLocation = "H:/cis/windows/workspace/boston_metro/src/Stations.txt";
+    	fileLocation = "src/Stations.txt";
     	orange = new HashMap<Integer, String>(32);
     	blue  = new HashMap<Integer, String>(32);
     	green  = new HashMap<Integer, String>(64);
@@ -58,11 +58,11 @@ public class BostonMetro
      * attach hashset with <stationID,stationLabel>
      */
     private void lineMaps(){
-    	
     	// Orange!
     	for(int i = 0; i < nodes.size(); i++){
     			if(nodes.get(i).contains("Orange") && Integer.parseInt(nodes.get(i).get(0)) == i + 1){
     				orange.put(i + 1, nodes.get(i).get(1));
+    				//System.out.print(nodes.get(i).get(1) + " was successfully added to hashmap orange," + " size: " + orange.size() + "\n");
     		}
     	}//blue!
     	for(int i = 0; i < nodes.size(); i++){
