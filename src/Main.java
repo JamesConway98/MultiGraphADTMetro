@@ -1,7 +1,11 @@
+import java.io.IOException;
+
 public class Main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws NoSuchNodeException, IOException
     {
-	System.out.println("Hallo Welt");
+		BostonMetro bm = new BostonMetro();
+		
+		bm.findPath();
     }
 }

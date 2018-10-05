@@ -56,6 +56,7 @@ public class Multigraph implements IGraph
 	}
 	return false;
     }
+    
 
     public List<IEdge> findPath(INode root, INode destination)
     {
