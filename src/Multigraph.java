@@ -134,6 +134,7 @@ public class Multigraph implements IGraph {
         }
         return neighbours;
     }
+    
 
     /**
      * Auxiliary method used to check if an edge exists between two given nodes.
