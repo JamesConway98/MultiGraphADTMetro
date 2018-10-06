@@ -22,7 +22,7 @@ public class BostonMetro
         ...
         something like that :)
 	*/
-    public BostonMetro() throws BadFileException {
+    public BostonMetro() throws BadFileException, NumberFormatException, NoSuchNodeException {
     	fileLocation = "src/Stations.txt";
     	orange = new HashMap<Integer, String>(32);
     	blue  = new HashMap<Integer, String>(32);
@@ -36,12 +36,8 @@ public class BostonMetro
 			throw new BadFileException("Incorrect File Source");
 		}
     	mapLines();
-    	try {
-			addAllNodes();
-		} catch (NoSuchNodeException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		addAllNodes();
+    	//addAllEdges();
     	
     }
     	
@@ -69,15 +65,23 @@ public class BostonMetro
     				
     		//green.forEach((k,v)->graph.addEdge(graph.getNodeById(), node2, label););	
     	
-    
+    /*This function is not working entirely correctly!! 
+     * it will correctly add some green lines, but will add some weird ones as well
+     * haven't managed to figure it out yet, but good luck /)(0.0)/)
+     * */
     private void addAllEdges() throws NumberFormatException, NoSuchNodeException{
     for(int i =0; i< nodes.size(); i++){
-    			if(green.containsKey(i) && (Integer.parseInt(nodes.get(i).get(4)) == i + 1)){
+    	for(int k = 0; k <nodes.size(); k++){
+    	System.out.print("does it contain i? " + green.containsKey(i) + " i: " + i + " outbound val: "+ nodes.get(i).get(4) + "\n");
+    			if(green.containsKey(i) && (Integer.parseInt(nodes.get(k).get(4)) == i)){
     				graph.addEdge(graph.getNodeById(i),graph.getNodeById(Integer.parseInt(nodes.get(i).get(4))), "green");
-    				System.out.print(graph.getLabelByNode(graph.getNodeById(i)) +" was successfully added to: " + nodes.get(i).get(1) + " as a node \n");
+    				//System.out.print(graph.getLabelByNode(graph.getNodeById(i)) +" was successfully added to: " + nodes.get(i).get(1) + " as a node \n");
+    			}else{
+    				System.out.print("false false false");
+    			}
     			}
     		}
-    	}
+    }
     
     
     
