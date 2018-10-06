@@ -7,4 +7,5 @@ public interface IGraph
     public List<IEdge> findPath(INode root, INode destination);
     public INode getNodeById(int id) throws NoSuchNodeException;
     public INode getNodeByLabel(String label) throws NoSuchNodeException;
+    public String getLabelByNode(INode nodeById);
 }
