@@ -129,7 +129,8 @@ public class BostonMetro
 		}
     	//red!!
     	for(int i = 0; i < nodes.size(); i++){
-			if((nodes.get(i).contains("Red") 
+			if((nodes.get(i).contains("Red")
+			    || nodes.get(i).contains("RedA")
 				|| nodes.get(i).contains("RedB")
 				|| nodes.get(i).contains("Mattapan")) && Integer.parseInt(nodes.get(i).get(0)) == i + 1){
 				red.put(i + 1, nodes.get(i).get(1));
