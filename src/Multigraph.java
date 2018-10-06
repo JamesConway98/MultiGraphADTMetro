@@ -45,6 +45,10 @@ public class Multigraph implements IGraph
 	throw new NoSuchNodeException();
     }
     
+    public String getLabelByNode(INode node){
+    	return node.getLabel();
+    }
+    
     private boolean isEdge(INode node1, INode node2) // might be needed for route planning :)
     {
 	for(MGEdge e : edges)
