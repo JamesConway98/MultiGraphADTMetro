@@ -69,8 +69,7 @@ public class BostonMetro
     				
     		//green.forEach((k,v)->graph.addEdge(graph.getNodeById(), node2, label););	
     	
-    /*
-     * this function isn't working yet
+    
     private void addAllEdges() throws NumberFormatException, NoSuchNodeException{
     for(int i =0; i< nodes.size(); i++){
     			if(green.containsKey(i) && (Integer.parseInt(nodes.get(i).get(4)) == i + 1)){
@@ -78,7 +77,7 @@ public class BostonMetro
     				System.out.print(graph.getLabelByNode(graph.getNodeById(i)) +" was successfully added to: " + nodes.get(i).get(1) + " as a node \n");
     			}
     		}
-    	}*/
+    	}
     
     
     
