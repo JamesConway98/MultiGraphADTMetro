@@ -42,7 +42,7 @@ public class BostonMetro
     	
     }
     
-public void findPath() throws NoSuchNodeException, BadFileException {
+public void init() throws NoSuchNodeException, BadFileException {
     	
     	String startStation = "";
     	String endStation = "";

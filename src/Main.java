@@ -6,6 +6,6 @@ public class Main
     {
 		BostonMetro bm = new BostonMetro();
 		
-		bm.findPath();
+		bm.init();
     }
 }
