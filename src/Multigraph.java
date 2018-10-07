@@ -14,7 +14,10 @@ public class Multigraph implements IGraph {
     }
 
     public void addEdge(INode node1, INode node2, String label) {
-        edges.add(new MGEdge(node1, node2, label));
+        IEdge e = new MGEdge(node1, node2, label);
+        if (!isEdge(node1, node2, label)) {
+            edges.add(e);
+        }
     }
 
     public INode getNodeById(int id) throws NoSuchNodeException {
@@ -26,13 +29,12 @@ public class Multigraph implements IGraph {
         throw new NoSuchNodeException();
     }
 
-    public INode getNodeByLabel(String label) throws NoSuchNodeException {
+    public INode getNodeByLabel(String label) throws NoSuchNodeException{
         for (INode n : nodes) {
             if (n.getLabel().equals(label)) {
                 return n;
             }
-        }
-        throw new NoSuchNodeException();
+        } throw new NoSuchNodeException();
     }
 
     /**
@@ -96,7 +98,7 @@ public class Multigraph implements IGraph {
         for (INode node = destination; node != null; node = previousNode.get(node)) {   /* Reaches this block if the destination was found. This block backtracks through the HashMap to build a list of edges that connect the destination and root. */
             INode tempPrevious = previousNode.get(node);
             for (IEdge edge : edges) {
-                if (findEdge(edge, node, tempPrevious))
+                if (findEdge(edge, tempPrevious, node))
                     path.add(edge);
             }
         }
@@ -128,13 +130,13 @@ public class Multigraph implements IGraph {
     private Set<INode> getNeighbours(INode root) {
         Set<INode> neighbours = new HashSet<>();
         for (INode node : nodes) {
-            if (isEdge(root, node)) {
+            if (isEdge(root, node, null)) {
                 neighbours.add(node);
             }
         }
         return neighbours;
     }
-    
+
 
     /**
      * Auxiliary method used to check if an edge exists between two given nodes.
@@ -143,18 +145,26 @@ public class Multigraph implements IGraph {
      * @param node2
      * @return True or false if an edge does or does not exist between the given nodes.
      */
-    private boolean isEdge(INode node1, INode node2) {
-        for (IEdge e : edges) {
-            if (e.getNode1().equals(node1) && e.getNode2().equals(node2) || e.getNode1().equals(node2) && e.getNode2().equals(node1)) { /* Checks both directions that the edge could be interpreted as going based on its node fields */
-                return true;
+    private boolean isEdge(INode node1, INode node2, String label) {
+        if (label == null) {
+            for (IEdge e : edges) {
+                if (e.getNode1().equals(node1) && e.getNode2().equals(node2) || e.getNode1().equals(node2) && e.getNode2().equals(node1)) { /* Checks both directions that the edge could be interpreted as going based on its node fields */
+                    return true;
+                }
+            }
+        } else {
+            for (IEdge e : edges) {
+                if ((e.getNode1().equals(node1) && e.getNode2().equals(node2) && e.getLabel().equals(label) || e.getNode1().equals(node2) && e.getNode2().equals(node1)) && e.getLabel().equals(label)) { /* Checks both directions that the edge could be interpreted as going based on its node fields */
+                    return true;
+                }
             }
         }
         return false;
     }
 
-	@Override
-	public String getLabelByNode(INode node) {
-		return node.getLabel();
-	}
+    @Override
+    public String getLabelByNode(INode node) {
+        return node.getLabel();
+    }
 }
 
