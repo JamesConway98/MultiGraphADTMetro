@@ -154,8 +154,7 @@ public class Multigraph implements IGraph {
 
 	@Override
 	public String getLabelByNode(INode node) {
-		// TODO Auto-generated method stub
-		return null;
+		return node.getLabel();
 	}
 }
 
