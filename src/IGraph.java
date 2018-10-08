@@ -5,6 +5,7 @@
  */
 
 import java.util.List;
+import java.util.Set;
 
 public interface IGraph {
     /**
@@ -39,5 +40,7 @@ public interface IGraph {
      */
     public INode getNodeById(int id) throws NoSuchNodeException;
 
-    public INode getNodeByLabel(String label) throws NoSuchNodeException;
+    public List<INode> getNodeByLabel(String label) throws NoSuchNodeException;
+    
+    public Set<INode> getNeighbours(INode root);
 }
