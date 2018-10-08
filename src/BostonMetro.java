@@ -66,7 +66,7 @@ public class BostonMetro
 
 	    System.out.println("Please enter your starting station: ");
 
-	    startStation = scanner.nextLine();
+	    startStation = scanner.nextLine().toLowerCase();
 
 	    if (startStation.toLowerCase().equals("exit"))
 	    {
@@ -125,7 +125,7 @@ public class BostonMetro
 
 	    System.out.println("Please enter your ending station: ");
 
-	    endStation = scanner.nextLine();
+	    endStation = scanner.nextLine().toLowerCase();
 
 	    if (endStation.toLowerCase().equals("exit"))
 	    {
