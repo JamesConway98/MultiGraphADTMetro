@@ -12,9 +12,7 @@ public class MGEdge implements IEdge {
         return label;
     }
 
-    public INode getNode1() {
-        return node1;
-    }
+    public INode getNode1() { return node1; }
 
     public INode getNode2() {
         return node2;
