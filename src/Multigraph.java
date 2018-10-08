@@ -1,46 +1,85 @@
 import java.util.*;
 
-public class Multigraph implements IGraph {
+public class Multigraph implements IGraph
+{
     private List<INode> nodes;
     private List<IEdge> edges;
 
-    public Multigraph() {
-        nodes = new ArrayList<>();
-        edges = new ArrayList<>();
+    public Multigraph()
+    {
+	nodes = new ArrayList<>();
+	edges = new ArrayList<>();
+    }
+    
+    /**
+     * Add a node to the graph
+     * 
+     * @param id  numeric identifier
+     * @param label name of the node
+     */
+    public void addNode(int id, String label)
+    {
+	nodes.add(new MGNode(id, label));
     }
 
-    public void addNode(int id, String label) {
-        nodes.add(new MGNode(id, label));
+    /**
+     * Add an edge to the graph
+     * 
+     * @param node1 node that is connected to node2
+     * @param node2 node that is connected to node1
+     * @param label name of the edge
+     */
+    public void addEdge(INode node1, INode node2, String label)
+    {
+	IEdge e = new MGEdge(node1, node2, label);
+	if (!isEdge(node1, node2, label))
+	{
+	    edges.add(e);
+	}
     }
 
-    public void addEdge(INode node1, INode node2, String label) {
-        IEdge e = new MGEdge(node1, node2, label);
-        if (!isEdge(node1, node2, label)) {
-            edges.add(e);
-        }
+    /**
+     * Get a node by its numeric identifier
+     * 
+     * @param id ID of the node to obtain
+     * @return a node that has the given ID
+     */
+    public INode getNodeById(int id) throws NoSuchNodeException
+    {
+	for (INode n : nodes)
+	{
+	    if (n.getId() == id)
+	    {
+		return n;
+	    }
+	}
+	throw new NoSuchNodeException();
     }
 
-    public INode getNodeById(int id) throws NoSuchNodeException {
-        for (INode n : nodes) {
-            if (n.getId() == id) {
-                return n;
-            }
-        }
-        throw new NoSuchNodeException();
-    }
-
-    public List<INode> getNodeByLabel(String label) throws NoSuchNodeException {
-        List<INode> list = new ArrayList<>();
-        for (INode n : nodes) {
-            if (n.getLabel().toLowerCase().equals(label)) {
-                list.add(n);
-            }
-        }
-        if (list.isEmpty()) {
-            throw new NoSuchNodeException();
-        } else {
-            return list;
-        }
+    /**
+     * Get all nodes that have the given label
+     * 
+     * @param label name to search for
+     * @returns a list of all nodes that have the given label
+     */
+    public List<INode> getNodeByLabel(String label) throws NoSuchNodeException
+    {
+	List<INode> list = new ArrayList<>();
+	for (INode n : nodes)
+	{
+	    if (n.getLabel().toLowerCase().equals(label))
+	    {
+		list.add(n);
+	    }
+	}
+	if (list.isEmpty())
+	{
+	    throw new NoSuchNodeException();
+	}
+	else
+	{
+	    return list;
+	}
     }
 
     /**
@@ -67,98 +106,114 @@ public class Multigraph implements IGraph {
      * @param destination
      * @return A list of IEdge objects
      */
-    public List<IEdge> findPath(INode root, INode destination) {
+    public List<IEdge> findPath(INode root, INode destination)
+    {
 
-        /**
-         * Declare fields used for searching the shortest route between two
-         * given nodes within the graph.
-         *
-         * nodesSearched:   A set of INode objects that keeps a record of visited
-         *                  nodes so the graph does not search in loops. Implemented as a HashSet
-         *                  as ordering of objects does not matter so the efficiency of this data
-         *                  type can be utilised.
-         * previousNode:    A map that links a recently
-         *                  visited node, to the node that the graph visited before when looking
-         *                  at its neighbours. Allows for backtracking and building the path.
-         * path:            The list used for holding the generated route and returning to
-         *                  the method caller.
-         * nextNodes:       A queue that is used to hold the nodes
-         *                  to next visit and check if it is the destination and if not, check
-         *                  its neighbours. By using the 'First in-First out' approach of a
-         *                  queue, it ensures the depth of searching remains consistent when
-         *                  looking at neighbours of nodes.
-         * current:         The node currently being compared to the destination and who's
-         *                  neighbours will be added to nextNodes.
-         */
-        Set<INode> nodesSearched = new HashSet<>();
-        Map<INode, INode> previousNode = new HashMap<>();
-        List<IEdge> path = new LinkedList<>();
-        Queue<INode> nextNodes = new LinkedList<>();
-        INode current = root;
+	/**
+	 * Declare fields used for searching the shortest route between two
+	 * given nodes within the graph.
+	 *
+	 * nodesSearched: A set of INode objects that keeps a record of visited
+	 * nodes so the graph does not search in loops. Implemented as a HashSet
+	 * as ordering of objects does not matter so the efficiency of this data
+	 * type can be utilised. previousNode: A map that links a recently
+	 * visited node, to the node that the graph visited before when looking
+	 * at its neighbours. Allows for backtracking and building the path.
+	 * path: The list used for holding the generated route and returning to
+	 * the method caller. nextNodes: A queue that is used to hold the nodes
+	 * to next visit and check if it is the destination and if not, check
+	 * its neighbours. By using the 'First in-First out' approach of a
+	 * queue, it ensures the depth of searching remains consistent when
+	 * looking at neighbours of nodes. current: The node currently being
+	 * compared to the destination and who's neighbours will be added to
+	 * nextNodes.
+	 */
+	Set<INode> nodesSearched = new HashSet<>();
+	Map<INode, INode> previousNode = new HashMap<>();
+	List<IEdge> path = new LinkedList<>();
+	Queue<INode> nextNodes = new LinkedList<>();
+	INode current = root;
 
-        /**
-         * Sets the root to be the first node checked. Also adds it to the checked set of nodes.
-         */
-        nextNodes.add(current);
-        nodesSearched.add(root);
+	/**
+	 * Sets the root to be the first node checked. Also adds it to the
+	 * checked set of nodes.
+	 */
+	nextNodes.add(current);
+	nodesSearched.add(root);
 
-        /**
-         * The search will continue to traverse the graph looking for the
-         * destination node as long as there are nodes that have been reached
-         * and not visited.
-         */
-        while (!nextNodes.isEmpty()) {
-            /* Takes the head node off of the queue (FIFO) and first checks if it is the destination. */
-            current = nextNodes.remove();
-            if (current.equals(destination)) {
-                break;
-            } else {
-                /* Gets all neighbouring nodes of currently checked node using the auxiliary method getNeighbours(INode root) */
-                Set<INode> neighbours = getNeighbours(current);
-                for (INode n : neighbours) {
-                    /* For each neighbouring node, if it has not been visited,
-                     * it gets added to the queue to be checked, added to the set of checked
-                     * nodes and a record of its predecessor is kept.*/
-                    if (!nodesSearched.contains(n)) {
-                        nextNodes.add(n);
-                        nodesSearched.add(n);
-                        previousNode.put(n, current);
-                    }
-                }
-            }
-        }
-        /*
-         * If the search ends and the currently checked node is not the
-         * destination, then all connected nodes have been checked and the
-         * destination was not found, so a path does not exist and the method
-         * returns the empty list.
-         */
-        if (!current.equals(destination)) {
-            return null;
-        }
-        /*
-         * Reaches this block if the destination was found. This block
-         * backtracks through the HashMap to build a list of edges that
-         * connect the destination and root.
-         */
-        for (INode node = destination; node != null; node = previousNode.get(node)) {
-            INode tempPrevious = previousNode.get(node);
-            for (IEdge edge : edges) {
-                if (findEdge(edge, tempPrevious, node))
-                    path.add(edge);
-            }
-        }
-        /*
-         * Reverses the list of edges as it will read
-         * from destination to root rather than root
-         * to destination due to backtracking.
-         */
-        Collections.reverse(path);
-        /*
-         * The shortest path has been found and is returned to
-         * method caller.
-         */
-        return path;
+	/**
+	 * The search will continue to traverse the graph looking for the
+	 * destination node as long as there are nodes that have been reached
+	 * and not visited.
+	 */
+	while (!nextNodes.isEmpty())
+	{
+	    /*
+	     * Takes the head node off of the queue (FIFO) and first checks if
+	     * it is the destination.
+	     */
+	    current = nextNodes.remove();
+	    if (current.equals(destination))
+	    {
+		break;
+	    }
+	    else
+	    {
+		/*
+		 * Gets all neighbouring nodes of currently checked node using
+		 * the auxiliary method getNeighbours(INode root)
+		 */
+		Set<INode> neighbours = getNeighbours(current);
+		for (INode n : neighbours)
+		{
+		    /*
+		     * For each neighbouring node, if it has not been visited,
+		     * it gets added to the queue to be checked, added to the
+		     * set of checked nodes and a record of its predecessor is
+		     * kept.
+		     */
+		    if (!nodesSearched.contains(n))
+		    {
+			nextNodes.add(n);
+			nodesSearched.add(n);
+			previousNode.put(n, current);
+		    }
+		}
+	    }
+	}
+	/*
+	 * If the search ends and the currently checked node is not the
+	 * destination, then all connected nodes have been checked and the
+	 * destination was not found, so a path does not exist and the method
+	 * returns the empty list.
+	 */
+	if (!current.equals(destination))
+	{
+	    return null;
+	}
+	/*
+	 * Reaches this block if the destination was found. This block
+	 * backtracks through the HashMap to build a list of edges that connect
+	 * the destination and root.
+	 */
+	for (INode node = destination; node != null; node = previousNode.get(node))
+	{
+	    INode tempPrevious = previousNode.get(node);
+	    for (IEdge edge : edges)
+	    {
+		if (findEdge(edge, tempPrevious, node))
+		    path.add(edge);
+	    }
+	}
+	/*
+	 * Reverses the list of edges as it will read from destination to root
+	 * rather than root to destination due to backtracking.
+	 */
+	Collections.reverse(path);
+	/*
+	 * The shortest path has been found and is returned to method caller.
+	 */
+	return path;
     }
 
     /**
@@ -169,14 +224,15 @@ public class Multigraph implements IGraph {
      * @param first
      * @param second
      * @return True or false if the given edge from the edges list is the
-     * desired edge between the given nodes.
+     *         desired edge between the given nodes.
      */
-    private boolean findEdge(IEdge edge, INode first, INode second) {
-        if ((edge.getNode1().equals(first) && edge.getNode2().equals(second))
-                || (edge.getNode1().equals(second) && edge.getNode2().equals(first)))
-            return true;
-        else
-            return false;
+    private boolean findEdge(IEdge edge, INode first, INode second)
+    {
+	if ((edge.getNode1().equals(first) && edge.getNode2().equals(second))
+		|| (edge.getNode1().equals(second) && edge.getNode2().equals(first)))
+	    return true;
+	else
+	    return false;
     }
 
     /**
@@ -186,14 +242,17 @@ public class Multigraph implements IGraph {
      * @param root
      * @return A set of nodes that neighbour the given node
      */
-    public Set<INode> getNeighbours(INode root) {
-        Set<INode> neighbours = new HashSet<>();
-        for (INode node : nodes) {
-            if (isEdge(root, node, null)) {
-                neighbours.add(node);
-            }
-        }
-        return neighbours;
+    public Set<INode> getNeighbours(INode root)
+    {
+	Set<INode> neighbours = new HashSet<>();
+	for (INode node : nodes)
+	{
+	    if (isEdge(root, node, null))
+	    {
+		neighbours.add(node);
+	    }
+	}
+	return neighbours;
     }
 
     /**
@@ -202,30 +261,38 @@ public class Multigraph implements IGraph {
      * @param node1
      * @param node2
      * @return True or false if an edge does or does not exist between the given
-     * nodes.
+     *         nodes.
      */
-    private boolean isEdge(INode node1, INode node2, String label) {
-        if (label == null) {
-            for (IEdge e : edges) {
-                if (e.getNode1().equals(node1) && e.getNode2().equals(node2)
-                        || e.getNode1().equals(node2) && e.getNode2().equals(node1)) { /*
-                 * Checks both directions that the edge could be interpreted
-                 * as going based on its node fields
-                 */
-                    return true;
-                }
-            }
-        } else {
-            for (IEdge e : edges) {
-                if ((e.getNode1().equals(node1) && e.getNode2().equals(node2) && e.getLabel().equals(label)
-                        || e.getNode1().equals(node2) && e.getNode2().equals(node1)) && e.getLabel().equals(label)) { /*
-                 * Checks both directions that the edge could be interpreted
-                 * as going based on its node fields
-                 */
-                    return true;
-                }
-            }
-        }
-        return false;
+    private boolean isEdge(INode node1, INode node2, String label)
+    {
+	if (label == null)
+	{
+	    for (IEdge e : edges)
+	    {
+		if (e.getNode1().equals(node1) && e.getNode2().equals(node2)
+			|| e.getNode1().equals(node2) && e.getNode2().equals(node1))
+		{ /*
+		   * Checks both directions that the edge could be interpreted
+		   * as going based on its node fields
+		   */
+		    return true;
+		}
+	    }
+	}
+	else
+	{
+	    for (IEdge e : edges)
+	    {
+		if ((e.getNode1().equals(node1) && e.getNode2().equals(node2) && e.getLabel().equals(label)
+			|| e.getNode1().equals(node2) && e.getNode2().equals(node1)) && e.getLabel().equals(label))
+		{ /*
+		   * Checks both directions that the edge could be interpreted
+		   * as going based on its node fields
+		   */
+		    return true;
+		}
+	    }
+	}
+	return false;
     }
 }
