@@ -161,10 +161,5 @@ public class Multigraph implements IGraph {
         }
         return false;
     }
-
-    @Override
-    public String getLabelByNode(INode node) {
-        return node.getLabel();
-    }
 }
 
