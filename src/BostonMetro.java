@@ -16,7 +16,7 @@ public class BostonMetro
      * graph.addEdge(graph.getNodeById(id1), graph.getNodeById(id2), "green");
      * }); ... something like that :)
      */
-    public BostonMetro() throws BadFileException, NumberFormatException
+    public BostonMetro()
     {
 	fileLocation = "src/Stations.txt";
 	orange = new HashMap<Integer, String>(32);
@@ -30,8 +30,8 @@ public class BostonMetro
 	}
 	catch (BadFileException e)
 	{
-	    // TODO Auto-generated catch block
-	    throw new BadFileException("Incorrect File Source");
+	    System.out.println("Fatal Error: Input file has wrong format!");
+	    System.exit(0);
 	}
 	mapLines();
 	addAllNodes();
@@ -39,7 +39,7 @@ public class BostonMetro
 
     }
 
-    public void init() throws BadFileException
+    public void init()
     {
 
 	String startStation = "";
@@ -49,8 +49,16 @@ public class BostonMetro
 
 	Scanner scanner = new Scanner(System.in);
 
-	// input the nodes and edges from map
-	read();
+	try
+	{
+	    // input the nodes and edges from map
+	    read();
+	}
+	catch (BadFileException e)
+	{
+	    System.out.println("Fatal Error: Input file has wrong format!");
+	    System.exit(0);
+	}
 
 	// while user input is not a valid station
 	while (startStation.toLowerCase() != "exit")
@@ -173,7 +181,7 @@ public class BostonMetro
 	    {
 		printPath(graph.findPath(graph.getNodeById(startStationID), graph.getNodeById(endStationID)));
 	    }
-	    catch(NoSuchNodeException e) // should never happen
+	    catch (NoSuchNodeException e) // should never happen
 	    {
 		System.out.println("Fatal Error: Input node to findPath not found!");
 		System.exit(0);
@@ -235,10 +243,8 @@ public class BostonMetro
      * where n is the number of lines the station is on. Checks for the outbound
      * and inbound station IDs not being 0 ie no station.
      *
-     * @throws NumberFormatException
-     * @throws NoSuchNodeException
      */
-    private void addAllEdges() throws NumberFormatException
+    private void addAllEdges()
     {
 	try
 	{
