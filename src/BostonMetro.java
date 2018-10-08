@@ -9,11 +9,11 @@ public class BostonMetro {
 
     public BostonMetro() {
         fileLocation = "src/Stations.txt";
-        orange = new HashMap<Integer, String>();
-        blue = new HashMap<Integer, String>();
-        green = new HashMap<Integer, String>();
-        red = new HashMap<Integer, String>();
-        mattapan = new HashMap<Integer, String>();
+        orange = new HashMap<>();
+        blue = new HashMap<>();
+        green = new HashMap<>();
+        red = new HashMap<>();
+        mattapan = new HashMap<>();
 
         try {
             read();
@@ -25,7 +25,6 @@ public class BostonMetro {
         addAllNodes();
         addAllEdges();
         init();
-
     }
 
     private void init() {
