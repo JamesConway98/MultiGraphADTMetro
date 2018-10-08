@@ -31,7 +31,7 @@ public class Multigraph implements IGraph {
 
     public INode getNodeByLabel(String label) throws NoSuchNodeException{
         for (INode n : nodes) {
-            if (n.getLabel().equals(label)) {
+            if (n.getLabel().toLowerCase().equals(label)) {
                 return n;
             }
         } throw new NoSuchNodeException();

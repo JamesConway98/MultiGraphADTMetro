@@ -43,15 +43,13 @@ public class BostonMetro {
 
         String startStation = "";
         String endStation = "";
+        int startStationID;
+        int endStationID;
 
         Scanner scanner = new Scanner(System.in);
 
-        //adding stations for test whilst I dont have mapParser connected
-        //graph.addNode(1, "Jorge");
-        //graph.addNode(2, "Don");
-
+        //input the nodes and edges from map
         read();
-
 
 
         //while user input is not a valid station
@@ -60,42 +58,74 @@ public class BostonMetro {
             System.out.println("Please enter your starting station: ");
 
             startStation = scanner.nextLine();
+  
+            //retrieve the station ID from the user input
+            startStationID = graph.getNodeByLabel(startStation).getId();
 
-            if(startStation.toLowerCase() == "exit") {
+            if(startStation.toLowerCase().equals("exit")) {
                 System.out.println("Application Closing...");
                 System.exit(0);
             }
-            else if(startStation.toLowerCase() == "st.paulstreet") {
-                //deal with duplicate station
+            else if(startStation.toLowerCase().equals("st.paulstreet")) {
+                
+            	System.out.println("Would you like the St.Paulstreet on line Green B or Green C? (Type 'B' or 'C')");
+                
+            	String input = scanner.nextLine().toLowerCase();
+            	
+                if(input.equals("b")) {
+                	startStationID = 38;
+                }else if(input.equals("c")) {
+                	startStationID = 61;
+                }else {
+                	startStationID = 0;	//If user inputs incorrect value then return id 0 to show incorrect input
+                }
+                
             }
 
             //if there is a station with the same name as the inputed value
-            if(graph.getNodeByLabel(startStation).getId() > 0) {
-                System.out.println("Starting Station " + graph.getNodeByLabel(startStation).getId());
+            if(startStationID > 0) {
+                System.out.println("Starting Station " + startStationID + " " + startStation);
             }
-            //if there is no station matching the input value
+            //if there is no station matching the input value; the getNodeByLabel method doesn't currently return a
+            //number if argument doesnt match, so this will never be called
             else {
                 System.out.println("There is no Station matching " + startStation);
             }
+            
+            System.out.println("Please enter your ending station: ");
 
             endStation = scanner.nextLine();
+            
+            //retrieve the station ID from the user input
+            endStationID = graph.getNodeByLabel(endStation).getId();
 
-            if (endStation.toLowerCase() == "exit") {
+            if (endStation.toLowerCase().equals("exit")) {
                 System.out.println("Application Closing...");
                 System.exit(0);
-            } else if (endStation.toLowerCase() == "st.paulstreet") {
-                //deal with duplicate station
+            } else if (endStation.toLowerCase().equals("st.paulstreet")) {
+            	
+            	System.out.println("Would you like the St.Paulstreet on line Green B or Green C? (Type 'B' or 'C')");
+                
+            	String input = scanner.nextLine().toLowerCase();
+            	
+                if(input.equals("b")) {
+                	endStationID = 38;
+                }else if(input.equals("c")) {
+                	endStationID = 61;
+                }else {
+                	endStationID = 0;	//If user inputs incorrect value then return id 0 to show incorrect input
+                }
             }
 
             //if there is a station with the same name as the inputed value
-            if (graph.getNodeByLabel(endStation).getId() > 0) {
-                System.out.println("Ending Station " + graph.getNodeByLabel(endStation).getId());
+            if (endStationID > 0) {
+                System.out.println("Ending Station " + endStationID + " " + endStation);
             }
             //if there is no station matching the input value
             else {
                 System.out.println("There is no Station matching " + endStation);
             }
-            printPath(graph.findPath(graph.getNodeByLabel(startStation), graph.getNodeByLabel(endStation)));
+            printPath(graph.findPath(graph.getNodeById(startStationID), graph.getNodeById(endStationID)));
         }
 
     }
