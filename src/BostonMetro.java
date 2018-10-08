@@ -157,7 +157,7 @@ public class BostonMetro {
 			if (prev != null && e.getNode1().equals(prev.getNode1()) && e.getNode2().equals(prev.getNode2())) {
 				System.out.print(", " + e.getLabel());
 			} else {
-				System.out.print("\n" + Go from " + e.getNode1().getLabel() + " to " + e.getNode2().getLabel() + " along the "
+				System.out.print("\n" + "Go from " + e.getNode1().getLabel() + " to " + e.getNode2().getLabel() + " along the "
 						+ e.getLabel() + " line.");
 			}
 			prev = e;
