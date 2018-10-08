@@ -13,7 +13,7 @@ public interface IGraph {
      * @param id
      * @param label
      */
-    public void addNode(int id, String label);
+    void addNode(int id, String label);
 
     /**
      * Allows an edge to be added to the graph using the nodes it connects and a label.
@@ -21,7 +21,7 @@ public interface IGraph {
      * @param node2
      * @param label
      */
-    public void addEdge(INode node1, INode node2, String label);
+    void addEdge(INode node1, INode node2, String label);
 
     /**
      * Traverses the graph to find a path from one given node to another.
@@ -30,7 +30,7 @@ public interface IGraph {
      * @param destination
      * @return
      */
-    public List<IEdge> findPath(INode root, INode destination);
+    List<IEdge> findPath(INode root, INode destination);
 
     /**
      * Allows a node in the graph to be found based on its ID
@@ -38,9 +38,9 @@ public interface IGraph {
      * @return
      * @throws NoSuchNodeException
      */
-    public INode getNodeById(int id) throws NoSuchNodeException;
+    INode getNodeById(int id) throws NoSuchNodeException;
 
-    public List<INode> getNodeByLabel(String label) throws NoSuchNodeException;
-    
-    public Set<INode> getNeighbours(INode root);
+    List<INode> getNodeByLabel(String label) throws NoSuchNodeException;
+
+    Set<INode> getNeighbours(INode root);
 }
