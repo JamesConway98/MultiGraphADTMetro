@@ -4,7 +4,7 @@ import java.util.*;
 public class BostonMetro {
     private ArrayList<ArrayList<String>> nodes;
     private String fileLocation;
-    HashMap<Integer, String> orange, blue, green, red;
+    HashMap<Integer, String> orange, blue, green, red, mattapan;
     private IGraph graph = new Multigraph();
 
     public BostonMetro() {
@@ -13,6 +13,7 @@ public class BostonMetro {
         blue = new HashMap<Integer, String>();
         green = new HashMap<Integer, String>();
         red = new HashMap<Integer, String>();
+        mattapan = new HashMap<Integer, String>();
 
         try {
             read();
@@ -186,6 +187,8 @@ public class BostonMetro {
                 graph.addNode(i, green.get(i));
             } else if (red.containsKey(i)) {
                 graph.addNode(i, red.get(i));
+            } else if(mattapan.containsKey(i)){
+                graph.addNode(i, mattapan.get(i));
             }
         }
     }
@@ -246,13 +249,16 @@ public class BostonMetro {
                     || nodes.get(i).contains("GreenC") || nodes.get(i).contains("GreenD")
                     || nodes.get(i).contains("GreenE")) && Integer.parseInt(nodes.get(i).get(0)) == i + 1) {
                 green.put(i + 1, nodes.get(i).get(1));
-
             }
+            
             // red!!
-            else if ((nodes.get(i).contains("Red") || nodes.get(i).contains("RedA") || nodes.get(i).contains("RedB")
-                    || nodes.get(i).contains("Mattapan")) && Integer.parseInt(nodes.get(i).get(0)) == i + 1) {
+            else if ((nodes.get(i).contains("Red") || nodes.get(i).contains("RedA") || nodes.get(i).contains("RedB")) 
+                    && Integer.parseInt(nodes.get(i).get(0)) == i + 1) {
                 red.put(i + 1, nodes.get(i).get(1));
-
+                
+            // mattapan
+            }else if(nodes.get(i).contains("Mattapan")){
+                mattapan.put(i + 1, nodes.get(i).get(1));
             }
         }
 		/*System.out.print("this is red: " + red.values() + " \n" + "this is green: " + green.values() + " \n"
