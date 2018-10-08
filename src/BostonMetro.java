@@ -13,7 +13,7 @@ public class BostonMetro {
 		blue = new HashMap<Integer, String>();
 		green = new HashMap<Integer, String>();
 		red = new HashMap<Integer, String>();
-
+		
 		try {
 			read();
 		} catch (BadFileException e) {
@@ -23,10 +23,11 @@ public class BostonMetro {
 		mapLines();
 		addAllNodes();
 		addAllEdges();
+		init();
 
 	}
 
-	public void init() {
+	private void init() {
 
 		String startStation = "";
 		String endStation = "";
