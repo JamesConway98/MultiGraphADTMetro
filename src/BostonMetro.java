@@ -26,7 +26,14 @@ public class BostonMetro {
         addAllEdges();
         init();
     }
-
+    /**
+     * Initialises the program by inputting  the nodes and edges from map, and to fail if reading is unsuccessful
+     * read user input, checking that valid text has been entered
+     * while it is valid entry, retrieve the ID of entry
+     * then check for entrys with same name, i.e. St.Paulstreet
+     * check validity of second entry
+     * if both are valid, we will then call findPath().
+     */
     private void init() {
 
         String startStation = "";
