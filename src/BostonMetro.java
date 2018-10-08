@@ -174,7 +174,12 @@ public class BostonMetro {
         }
         System.out.print("\nYou have arrived at your destination");
         System.out.println();
-    }
+    }/**
+    *adds all the nodes read in from our nodes arraylist
+    * increments the key starting from 1
+    * add to our instance of multigraph the new node
+    * loop until we reach the end of the nodes arraylist
+    */
 
     private void addAllNodes() {
 
@@ -221,7 +226,9 @@ public class BostonMetro {
             System.out.println(e);
         }
     }
-
+    /*creates an instance of MetroMapParser
+    * calls generateGraphFromFile to add an arraylist of all node information
+    */
     private void read() throws BadFileException {
         try {
             MetroMapParser reader = new MetroMapParser(fileLocation);
@@ -233,6 +240,8 @@ public class BostonMetro {
 
     /*
      * for each colour attach hashset with <stationID,stationLabel>
+     * will check from arraylist of nodes to designate its particular colour
+     * to its unique hashset 
      */
     private void mapLines() {
         // Orange!
