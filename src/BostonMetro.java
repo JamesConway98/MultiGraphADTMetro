@@ -164,14 +164,14 @@ public class BostonMetro {
             } else if (prev != null) {
                 if (prev.getNode2().getLabel().equals(e.getNode1().getLabel())) {
                     System.out.print("\n" + "Go from " + e.getNode1().getLabel() + " to " + e.getNode2().getLabel()
-                            + " along the " + e.getLabel() + " line.");
+                            + " along line(s) " + e.getLabel());
                 } else {
                     System.out.print("\n" + "Go from " + e.getNode2().getLabel() + " to " + e.getNode1().getLabel()
-                            + " along the " + e.getLabel() + " line.");
+                            + " along line(s) " + e.getLabel());
                 }
             } else {
                 System.out.print("\n" + "Go from " + e.getNode1().getLabel() + " to " + e.getNode2().getLabel()
-                        + " along the " + e.getLabel() + " line.");
+                        + " along line(s) " + e.getLabel());
             }
             prev = e;
         }
