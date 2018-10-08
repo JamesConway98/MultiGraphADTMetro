@@ -58,15 +58,16 @@ public class BostonMetro {
             System.out.println("Please enter your starting station: ");
 
             startStation = scanner.nextLine();
-  
-            //retrieve the station ID from the user input
-            startStationID = graph.getNodeByLabel(startStation).getId();
 
             if(startStation.toLowerCase().equals("exit")) {
                 System.out.println("Application Closing...");
                 System.exit(0);
             }
-            else if(startStation.toLowerCase().equals("st.paulstreet")) {
+            
+            //retrieve the station ID from the user input
+            startStationID = graph.getNodeByLabel(startStation).getId();
+            
+            if(startStation.toLowerCase().equals("st.paulstreet")) {
                 
             	System.out.println("Would you like the St.Paulstreet on line Green B or Green C? (Type 'B' or 'C')");
                 
@@ -95,14 +96,16 @@ public class BostonMetro {
             System.out.println("Please enter your ending station: ");
 
             endStation = scanner.nextLine();
-            
-            //retrieve the station ID from the user input
-            endStationID = graph.getNodeByLabel(endStation).getId();
 
             if (endStation.toLowerCase().equals("exit")) {
                 System.out.println("Application Closing...");
                 System.exit(0);
-            } else if (endStation.toLowerCase().equals("st.paulstreet")) {
+            } 
+            
+            //retrieve the station ID from the user input
+            endStationID = graph.getNodeByLabel(endStation).getId();
+            
+            if (endStation.toLowerCase().equals("st.paulstreet")) {
             	
             	System.out.println("Would you like the St.Paulstreet on line Green B or Green C? (Type 'B' or 'C')");
                 
