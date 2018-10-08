@@ -40,7 +40,18 @@ public interface IGraph {
      */
     INode getNodeById(int id) throws NoSuchNodeException;
 
+    /**
+     * Allows access to all nodes that have a given label
+     * @param label
+     * @return a list of nodes with the given label
+     * @throws NoSuchNodeException
+     */
     List<INode> getNodeByLabel(String label) throws NoSuchNodeException;
 
+    /**
+     * Allows access to the neighbours of a given node
+     * @param root
+     * @return a set of nodes that are the neighbours of the given node
+     */
     Set<INode> getNeighbours(INode root);
 }
