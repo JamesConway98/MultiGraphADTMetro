@@ -187,16 +187,6 @@ public class BostonMetro {
             } else if (red.containsKey(i)) {
                 graph.addNode(i, red.get(i));
             }
-            /*
-             * try {// use this for testing all nodes have been added!
-             * System.out.print(graph.getNodeById(i) +
-             * " was successfully added to graph, and i: " + i + "\n");
-             * System.out.print(graph.getLabelByNode(graph.getNodeById(i)) +
-             * " was added, id: " + i + "\n"); } catch (NoSuchNodeException e)
-             * // should never happen {
-             * System.out.println("Fatal error: Node doesn't exist!");
-             * System.exit(0); }
-             */
         }
     }
 
