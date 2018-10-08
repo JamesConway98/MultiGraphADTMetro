@@ -7,17 +7,17 @@ public interface IEdge {
      * Provides access to the label of the edge
      * @return label
      */
-    public String getLabel();
+    String getLabel();
 
     /**
      * Provides access to the first of the two nodes that the edge connects.
      * @return first node
      */
-    public INode getNode1();
+    INode getNode1();
 
     /**
      * Provides access to the second of the two nodes that the edge connects.
      * @return
      */
-    public INode getNode2();
+    INode getNode2();
 }
