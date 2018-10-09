@@ -41,7 +41,7 @@ public class BostonMetro
     private int getStation(Scanner scanner)
     {
 	int ID = 0;
-	String name = scanner.nextLine();
+	String name = scanner.nextLine().toLowerCase();
 	if (name.toLowerCase().equals("exit"))
 	{
 	    System.out.println("Application Closing...");
