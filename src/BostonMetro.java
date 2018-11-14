@@ -26,22 +26,55 @@ public class BostonMetro {
         addAllEdges();
         init();
     }
+
     /**
-     * Initialises the program by inputting  the nodes and edges from map, and to fail if reading is unsuccessful
-     * read user input, checking that valid text has been entered
-     * while it is valid entry, retrieve the ID of entry
-     * then check for entrys with same name, i.e. St.Paulstreet
-     * check validity of second entry
-     * if both are valid, we will then call findPath().
+     * Parse user input and obtain node ID for a given station name
+     *
+     * @param scanner
+     * @return node ID of station if successful, -1 otherwise
      */
+    private int getStation(Scanner scanner) {
+        int ID = 0;
+        String name = scanner.nextLine().toLowerCase();
+        if (name.toLowerCase().equals("exit")) {
+            System.out.println("Application Closing...");
+            System.exit(0);
+        }
+
+        try {
+            // retrieve the station ID from the user input
+            if (graph.getNodeByLabel(name).size() == 1) {
+                ID = graph.getNodeByLabel(name).get(0).getId();
+            } else {
+                System.out.println("Which station do you wish to select?");
+                int i = 0;
+                for (INode n : graph.getNodeByLabel(name)) {
+                    System.out.print(name + " with neighbours");
+                    for (INode neighbour : graph.getNeighbours(n)) {
+                        System.out.print(" " + neighbour.getLabel());
+                    }
+                    System.out.println(" (" + i + ")");
+                    i++;
+                }
+                int userSelection = Integer.parseInt(scanner.nextLine());
+                ID = graph.getNodeByLabel(name).get(userSelection).getId();
+            }
+        } catch (NoSuchNodeException e) {
+            System.out.println("A station with the name " + name + " doesn't exist.");
+            return -1;
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error: Station index out of bounds!");
+            return -1;
+        }
+        return ID;
+    }
+
     private void init() {
 
         String startStation = "";
         String endStation = "";
         int startStationID;
         int endStationID;
-
-        Scanner scanner = new Scanner(System.in);
 
         try {
             // input the nodes and edges from map
@@ -51,43 +84,41 @@ public class BostonMetro {
             System.exit(0);
         }
 
+        System.out.println("---------------------------------------------------------------------");
+        System.out.println("*********************************************************************");
+        System.out.println("** ___________   ___________________________________________       **");
+        System.out.println("**  ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\      **");
+        System.out.println("** |   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\     **");
+        System.out.println("** |___| |___|||| |___| |___| |___|  |   |   | |  |  |        \\    **");
+        System.out.println("**            |||                    |___|___| |  |__|         )   **");
+        System.out.println("** ___________|||______________________________|______________/    **");
+        System.out.println("**            |||                                        /         **");
+        System.out.println("** -----------'''---------------------------------------'          **");
+        System.out.println("*********************************************************************");
+        System.out.println("**   ____            _                __  __      _                **");
+        System.out.println("**  |  _ \\          | |              |  \\/  |    | |               **");
+        System.out.println("**  | |_) | ___  ___| |_ ___  _ __   | \\  / | ___| |_ _ __ ___     **");
+        System.out.println("**  |  _ < / _ \\/ __| __/ _ \\| \'_ \\  | |\\/| |/ _ \\ __| \'__/ _ \\    **");
+        System.out.println("**  | |_) | (_) \\__ \\ || (_) | | | | | |  | |  __/ |_| | | (_) |   **");
+        System.out.println("**  |____/ \\___/|___/\\__\\___/|_| |_| |_|  |_|\\___|\\__|_|  \\___/    **");
+        System.out.println("**                                                                 **");
+        System.out.println("*********************************************************************");
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''");
+        System.out.println();
+        System.out.println("Enter your start and destination stations when prompted.");
+        System.out.println("To quit type \'exit\'.");
+        System.out.println();
+
+        Scanner scanner = new Scanner(System.in);
+
         // while user input is not a valid station
         while (startStation.toLowerCase() != "exit") {
 
             System.out.println("Please enter your starting station: ");
 
-            startStation = scanner.nextLine().toLowerCase();
-
-            if (startStation.toLowerCase().equals("exit")) {
-                System.out.println("Application Closing...");
-                System.exit(0);
-            }
-
-            try {
-                // retrieve the station ID from the user input
-                if (graph.getNodeByLabel(startStation).size() == 1) {
-                    startStationID = graph.getNodeByLabel(startStation).get(0).getId();
-                } else {
-                    System.out.println("Which station do you wish to select?");
-                    int i = 0;
-                    for (INode n : graph.getNodeByLabel(startStation)) {
-                        System.out.print(startStation + " with neighbours");
-                        for (INode neighbour : graph.getNeighbours(n)) {
-                            System.out.print(" " + neighbour.getLabel());
-                        }
-                        System.out.println(" (" + i + ")");
-                        i++;
-                    }
-                    int userSelection = Integer.parseInt(scanner.nextLine());
-                    startStationID = graph.getNodeByLabel(startStation).get(userSelection).getId();
-                }
-            } catch (NoSuchNodeException e) {
-                System.out.println("A station with the name " + startStation + " doesn't exist.");
+            startStationID = getStation(scanner);
+            if (startStationID == -1)
                 continue;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Error: Station index out of bounds!");
-                continue;
-            }
 
             // if there is a station with the same name as the inputed value
             if (startStationID > 0) {
@@ -95,47 +126,16 @@ public class BostonMetro {
             }
             // if there is no station matching the input value; the
             // getNodeByLabel method doesn't currently return a
-            // number if argument doesnt match, so this will never be called
+            // number if argument doesn't match, so this will never be called
             else {
                 System.out.println("There is no Station matching " + startStation);
             }
 
             System.out.println("Please enter your ending station: ");
 
-            endStation = scanner.nextLine().toLowerCase();
-
-            if (endStation.toLowerCase().equals("exit")) {
-                System.out.println("Application Closing...");
-                System.exit(0);
-            }
-
-            try {
-                // retrieve the station ID from the user input
-                if (graph.getNodeByLabel(endStation).size() == 1) {
-                    endStationID = graph.getNodeByLabel(endStation).get(0).getId();
-                } else {
-                    System.out.println("Which station do you wish to select?");
-                    int i = 0;
-                    for (INode n : graph.getNodeByLabel(endStation)) {
-                        System.out.print(endStation + " with neighbours");
-                        for (INode neighbour : graph.getNeighbours(n)) {
-                            System.out.print(" " + neighbour.getLabel());
-                        }
-                        System.out.println(" (" + i + ")");
-                        i++;
-                    }
-                    int userSelection = Integer.parseInt(scanner.nextLine());
-                    endStationID = graph.getNodeByLabel(endStation).get(userSelection).getId();
-                }
-            } catch (NoSuchNodeException e) {
-                System.out.println("A station with the name " + endStation + " doesn't exist.");
+            endStationID = getStation(scanner);
+            if (endStationID == -1)
                 continue;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Error: Station index out of bounds!");
-                continue;
-            }
-
-
             // if there is a station with the same name as the inputed value
             if (endStationID > 0) {
                 System.out.println("Ending Station " + endStationID + " " + endStation);
@@ -146,14 +146,13 @@ public class BostonMetro {
             }
             try {
                 printPath(graph.findPath(graph.getNodeById(startStationID), graph.getNodeById(endStationID)));
-            } catch (NoSuchNodeException e) // should never happen
-            {
-                System.out.println("Fatal Error: Input node to findPath not found!");
-                System.exit(0);
-            }
+            } catch (NoSuchNodeException e) {   // should never happen
+            System.out.println("Fatal Error: Input node to findPath not found!");
+            System.exit(0);
         }
-
     }
+
+}
 
     /**
      * Prints the shortest path that was found between two nodes. Handles
@@ -171,14 +170,14 @@ public class BostonMetro {
             } else if (prev != null) {
                 if (prev.getNode2().getLabel().equals(e.getNode1().getLabel())) {
                     System.out.print("\n" + "Go from " + e.getNode1().getLabel() + " to " + e.getNode2().getLabel()
-                            + " along the " + e.getLabel() + " line.");
+                            + " along line(s) " + e.getLabel());
                 } else {
                     System.out.print("\n" + "Go from " + e.getNode2().getLabel() + " to " + e.getNode1().getLabel()
-                            + " along the " + e.getLabel() + " line.");
+                            + " along line(s) " + e.getLabel());
                 }
             } else {
                 System.out.print("\n" + "Go from " + e.getNode1().getLabel() + " to " + e.getNode2().getLabel()
-                        + " along the " + e.getLabel() + " line.");
+                        + " along line(s) " + e.getLabel());
             }
             prev = e;
         }
@@ -193,7 +192,6 @@ public class BostonMetro {
      */
 
     private void addAllNodes() {
-
         for (int i = 1; i <= nodes.size(); i++) {
             if (orange.containsKey(i)) {
                 graph.addNode(i, orange.get(i));
